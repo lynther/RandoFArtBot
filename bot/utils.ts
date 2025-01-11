@@ -19,6 +19,7 @@ const replacements = [
   [/_/g, '\\_', 'underscores'],
   [/`/g, '\\`', 'codeblocks'],
   [/-/g, '\\-', 'codeblocks'],
+  [/\./g, '\\.', 'dot'],
 ];
 
 // https://www.npmjs.com/package/markdown-escape?activeTab=code
