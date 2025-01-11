@@ -1,4 +1,7 @@
 # random_anime_pic_bot
+Бот для получения случайного изображения с api nekosapi.com.
+
+Можно менять рейтинг изображения и в будущем планируется поддержка тегов.
 
 To install dependencies:
 
@@ -6,7 +9,10 @@ To install dependencies:
 bun install
 ```
 
-To run:
+Для запуска:
+
+Перед запуском задать переменную окружения TOKEN в файле `.env` либо другим способом.
+
 
 ```bash
 bun run index.ts
