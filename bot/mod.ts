@@ -31,8 +31,10 @@ bot.catch(async err => {
 });
 
 export async function startPolling() {
-  await bot.api.setMyShortDescription('Отправляет случайное изображение с nekosapi.com');
-  await bot.api.setMyDescription('Отправляет случайное изображение с nekosapi.com');
+  await bot.api.setMyShortDescription(
+    'Отправляет случайное изображение с nekosapi.com или e621.net'
+  );
+  await bot.api.setMyDescription('Отправляет случайное изображение с nekosapi.com или e621.net');
   await bot.api.setMyCommands([{ command: 'start', description: 'Показать клавиатуру' }]);
 
   bot.start();
