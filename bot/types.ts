@@ -1,6 +1,6 @@
 import type { Conversation, ConversationFlavor } from '@grammyjs/conversations';
 import type { Context, SessionFlavor } from 'grammy';
-import type { Rating } from '../nekos_api/types';
+import type { Rating } from '../image_api/anime/nekos/types';
 
 export interface SessionData {
   rating: Rating;

@@ -1,4 +1,4 @@
-import type { Rating } from '../../nekos_api/types';
+import type { Rating } from '../../image_api/anime/nekos/types';
 import type { MyContext, MyConversation } from '../types';
 import { logUserAction } from '../utils';
 

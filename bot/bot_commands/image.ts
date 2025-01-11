@@ -1,4 +1,4 @@
-import { getRandomImage } from '../../nekos_api/mod';
+import { getRandomImage } from '../../image_api/anime/nekos/mod';
 import type { MyContext } from '../types';
 import { logUserAction } from '../utils';
 
