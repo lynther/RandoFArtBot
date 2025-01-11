@@ -1,3 +1,4 @@
+import axios from 'axios';
 import type { ImageData, Query } from './types';
 
 const API_BASE = 'https://api.nekosapi.com/v4/';
@@ -8,15 +9,14 @@ export async function getRandomImage(query: Query): Promise<ImageData | null> {
   url.search = params.toString();
 
   try {
-    const response = await fetch(url);
+    const response = await axios.get<ImageData[]>(url.toString());
 
-    if (!response.ok) {
+    if (!response.status) {
       console.error(`${url} - ${response.status}`);
       return null;
     }
 
-    const data = (await response.json()) as ImageData[];
-    return data[0];
+    return response.data[0];
   } catch (error) {
     console.error(error);
     return null;
