@@ -5,7 +5,10 @@ import type { MyContext } from '../types';
 import { logUserAction, mdEscape } from '../utils';
 
 export async function imageCommandAnime(ctx: MyContext) {
-  const image = await getNekosRandomImage({ rating: ctx.session.rating, tags: ctx.session.tags });
+  const image = await getNekosRandomImage({
+    rating: ctx.session.rating,
+    tags: ctx.session.tags,
+  });
   ctx.session.url = image?.url;
 
   logUserAction(ctx, '⛩️ Получить изображение [Anime]');

@@ -8,5 +8,7 @@ export interface SessionData {
   url?: string;
 }
 
-export type MyContext = Context & SessionFlavor<SessionData> & ConversationFlavor;
+export type MyContext = Context &
+  SessionFlavor<SessionData> &
+  ConversationFlavor;
 export type MyConversation = Conversation<MyContext>;

@@ -14,7 +14,12 @@ function initial(): SessionData {
   return { rating: 'safe', tags: 'girl' };
 }
 
-bot.use(session({ initial, storage: new FileAdapter<SessionData>({ dirName: 'sessions' }) }));
+bot.use(
+  session({
+    initial,
+    storage: new FileAdapter<SessionData>({ dirName: 'sessions' }),
+  })
+);
 bot.use(conversations());
 bot.use(createConversation(setRating));
 bot.command('start', startCommand);
@@ -22,7 +27,10 @@ bot.on('message:text', onMessageText);
 bot.on('callback_query:data', setSettings);
 bot.catch(async err => {
   if (err.message.includes('failed to get HTTP URL content')) {
-    const msg = ['telegram не удалось скачать изображение по ссылке:', err.ctx.session.url];
+    const msg = [
+      'telegram не удалось скачать изображение по ссылке:',
+      err.ctx.session.url,
+    ];
     await err.ctx.reply(msg.join('\n'));
     return;
   }
@@ -34,8 +42,12 @@ export async function startPolling() {
   await bot.api.setMyShortDescription(
     'Отправляет случайное изображение с nekosapi.com или e621.net'
   );
-  await bot.api.setMyDescription('Отправляет случайное изображение с nekosapi.com или e621.net');
-  await bot.api.setMyCommands([{ command: 'start', description: 'Показать клавиатуру' }]);
+  await bot.api.setMyDescription(
+    'Отправляет случайное изображение с nekosapi.com или e621.net'
+  );
+  await bot.api.setMyCommands([
+    { command: 'start', description: 'Показать клавиатуру' },
+  ]);
 
   bot.start();
   console.log('Бот запустился');
