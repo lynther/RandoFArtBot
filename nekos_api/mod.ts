@@ -2,13 +2,9 @@ import type { ImageData, Query } from './types';
 
 const API_BASE = 'https://api.nekosapi.com/v4/';
 
-export async function getRandomImage(query?: Query): Promise<ImageData | null> {
-  if (query === undefined) {
-    query = { rating: 'safe', limit: '1' };
-  }
-
+export async function getRandomImage(query: Query): Promise<ImageData | null> {
   const url = new URL('images/random', API_BASE);
-  const params = new URLSearchParams({ ...query });
+  const params = new URLSearchParams({ limit: '1', ...query });
   url.search = params.toString();
 
   try {
