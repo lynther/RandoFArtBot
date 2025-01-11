@@ -20,6 +20,9 @@ bot.use(createConversation(setRating));
 bot.command('start', startCommand);
 bot.on('message:text', onMessageText);
 bot.on('callback_query:data', setSettings);
+bot.catch(error => {
+  console.log(error);
+});
 
 export async function startPolling() {
   await bot.api.setMyShortDescription('Отправляет случайное изображение с nekosapi.com');
