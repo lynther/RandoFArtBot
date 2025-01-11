@@ -32,7 +32,7 @@ export async function imageCommandFurry(ctx: MyContext) {
   const post = await getE621RandomImage(
     'feral rating:e -type:gif -type:swf -type:webm',
     env.PROXY!
-  );
+  ); // временное решение
 
   logUserAction(ctx, '🦊 Получить изображение [Furry]');
 
