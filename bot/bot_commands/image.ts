@@ -28,7 +28,7 @@ export async function imageCommandAnime(ctx: MyContext) {
 }
 
 export async function imageCommandFurry(ctx: MyContext) {
-  const post = await getE621RandomImage('fox', env.PROXY!);
+  const post = await getE621RandomImage('fox -type:gif -type:swf -type:webm', env.PROXY!);
   logUserAction(ctx, '🦊 Получить изображение [Furry]');
 
   if (post !== null) {
