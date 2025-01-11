@@ -32,10 +32,20 @@ export async function imageCommandFurry(ctx: MyContext) {
   logUserAction(ctx, '🦊 Получить изображение [Furry]');
 
   if (post !== null) {
-    const { artist } = post?.tags;
+    let tags;
+
+    if (post.tags.general.length > 30) {
+      tags = post.tags.general.slice(0, 30);
+    } else {
+      tags = post.tags.general;
+    }
+
+    const { artist } = post.tags;
     const description = [
-      artist.length == 1 ? `*Автор*: ${artist[0]}` : `*Авторы*: ${artist.join(', ')}`,
-      `*Теги*: ${mdEscape(post.tags.general.join(', '))}`,
+      artist.length == 1
+        ? `*Автор*: ${mdEscape(artist[0])}`
+        : `*Авторы*: ${mdEscape(artist.join(', '))}`,
+      `*Теги*: ${mdEscape(tags.join(', '))}`,
       `*Рейтинг*: \`${post.rating}\``,
       `[Ссылка на изображение](https://e621.net/posts/${post.id})`,
     ];
