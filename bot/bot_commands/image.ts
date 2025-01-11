@@ -63,7 +63,6 @@ export async function imageCommandFurry(ctx: MyContext) {
   ];
 
   await ctx.replyWithChatAction('upload_photo');
-  console.log(post.file.size);
 
   if (post.file.size > 5242880) {
     await ctx.reply(description.join('\n'), { parse_mode: 'MarkdownV2' });
