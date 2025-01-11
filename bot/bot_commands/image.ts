@@ -2,7 +2,7 @@ import { env } from 'bun';
 import { getNekosRandomImage } from '../../image_api/anime/nekos/mod';
 import { getE621RandomImage } from '../../image_api/furry/e621/mod';
 import type { MyContext } from '../types';
-import { logUserAction } from '../utils';
+import { logUserAction, mdEscape } from '../utils';
 
 export async function imageCommandAnime(ctx: MyContext) {
   const image = await getNekosRandomImage({ rating: ctx.session.rating, tags: ctx.session.tags });
@@ -12,7 +12,7 @@ export async function imageCommandAnime(ctx: MyContext) {
   if (image !== null) {
     const description = [
       `*Автор*: ${image.artist_name ?? 'не указан'}`,
-      `*Теги*: ${image.tags.join(', ').replaceAll('_', '\\_')}`,
+      `*Теги*: ${mdEscape(image.tags.join(', '))}`,
       `*Рейтинг*: \`${ctx.session.rating}\``,
     ];
 
@@ -29,14 +29,15 @@ export async function imageCommandAnime(ctx: MyContext) {
 
 export async function imageCommandFurry(ctx: MyContext) {
   const post = await getE621RandomImage('fox', env.PROXY!);
-
   logUserAction(ctx, '🦊 Получить изображение [Furry]');
 
   if (post !== null) {
+    const { artist } = post?.tags;
     const description = [
-      `*Автор*: ${post.tags.artist ?? 'не указан'}`,
-      `*Теги*: ${post.tags.general.join(', ').replaceAll('_', '\\_')}`,
+      artist.length == 1 ? `*Автор*: ${artist[0]}` : `*Авторы*: ${artist.join(', ')}`,
+      `*Теги*: ${mdEscape(post.tags.general.join(', '))}`,
       `*Рейтинг*: \`${post.rating}\``,
+      `[Ссылка на изображение](https://e621.net/posts/${post.id})`,
     ];
 
     await ctx.replyWithChatAction('upload_photo');
