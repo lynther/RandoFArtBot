@@ -6,6 +6,7 @@ import { logUserAction, mdEscape } from '../utils';
 
 export async function imageCommandAnime(ctx: MyContext) {
   const image = await getNekosRandomImage({ rating: ctx.session.rating, tags: ctx.session.tags });
+  ctx.session.url = image?.url;
 
   logUserAction(ctx, '⛩️ Получить изображение [Anime]');
 
@@ -28,35 +29,40 @@ export async function imageCommandAnime(ctx: MyContext) {
 }
 
 export async function imageCommandFurry(ctx: MyContext) {
-  const post = await getE621RandomImage('fox -type:gif -type:swf -type:webm', env.PROXY!);
+  const post = await getE621RandomImage(
+    'feral rating:e -type:gif -type:swf -type:webm',
+    env.PROXY!
+  );
+
   logUserAction(ctx, '🦊 Получить изображение [Furry]');
 
-  if (post !== null) {
-    let tags;
-
-    if (post.tags.general.length > 30) {
-      tags = post.tags.general.slice(0, 30);
-    } else {
-      tags = post.tags.general;
-    }
-
-    const { artist } = post.tags;
-    const description = [
-      artist.length == 1
-        ? `*Автор*: ${mdEscape(artist[0])}`
-        : `*Авторы*: ${mdEscape(artist.join(', '))}`,
-      `*Теги*: ${mdEscape(tags.join(', '))}`,
-      `*Рейтинг*: \`${post.rating}\``,
-      `[Ссылка на изображение](https://e621.net/posts/${post.id})`,
-    ];
-
-    await ctx.replyWithChatAction('upload_photo');
-    await ctx.replyWithPhoto(post.file.url, {
-      caption: description.join('\n'),
-      parse_mode: 'MarkdownV2',
-    });
+  if (post === null) {
+    await ctx.reply('Не удалось получить ссылку на изображение :(');
     return;
   }
+  ctx.session.url = post.file.url;
+  let tags;
 
-  await ctx.reply('Не удалось получить ссылку на изображение :(');
+  if (post.tags.general.length > 30) {
+    tags = post.tags.general.slice(0, 30);
+  } else {
+    tags = post.tags.general;
+  }
+
+  const { artist } = post.tags;
+  const description = [
+    artist.length == 1
+      ? `*Автор*: ${mdEscape(artist[0])}`
+      : `*Авторы*: ${mdEscape(artist.join(', '))}`,
+    `*Теги*: ${mdEscape(tags.join(', '))}`,
+    `*Рейтинг*: \`${post.rating}\``,
+    `[Ссылка на изображение](https://e621.net/posts/${post.id})`,
+  ];
+
+  await ctx.replyWithChatAction('upload_photo');
+  await ctx.replyWithPhoto(post.file.url, {
+    caption: description.join('\n'),
+    parse_mode: 'MarkdownV2',
+  });
+  return;
 }
