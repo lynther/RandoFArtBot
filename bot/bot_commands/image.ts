@@ -4,6 +4,11 @@ import { getE621RandomImage } from '../../image_api/furry/e621/mod';
 import type { MyContext } from '../types';
 import { logUserAction, mdEscape } from '../utils';
 
+const errorMsg = [
+  'Не удалось получить ссылку на изображение.',
+  'Попробуйте ещё раз, или поменяйте теги.',
+].join('\n');
+
 export async function imageCommandAnime(ctx: MyContext) {
   const image = await getNekosRandomImage(ctx.session.rating);
 
@@ -24,7 +29,7 @@ export async function imageCommandAnime(ctx: MyContext) {
     return;
   }
 
-  await ctx.reply('Не удалось получить ссылку на изображение :(');
+  await ctx.reply(errorMsg);
 }
 
 export async function imageCommandFurry(ctx: MyContext) {
@@ -36,7 +41,7 @@ export async function imageCommandFurry(ctx: MyContext) {
   logUserAction(ctx, '🦊 Получить изображение [Furry]');
 
   if (post === null) {
-    await ctx.reply('Не удалось получить ссылку на изображение :(');
+    await ctx.reply(errorMsg);
     return;
   }
 
@@ -55,7 +60,7 @@ export async function imageCommandFurry(ctx: MyContext) {
       : `*Авторы*: ${mdEscape(artist.join(', '))}`,
     `*Теги*: ${mdEscape(tags.join(', '))}`,
     `*Рейтинг*: \`${post.rating}\``,
-    `[Ссылка на изображение](https://e621.net/posts/${post.id})`,
+    `[Ссылка на пост](https://e621.net/posts/${post.id})`,
   ];
 
   await ctx.replyWithChatAction('upload_photo');
