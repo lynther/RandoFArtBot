@@ -25,6 +25,7 @@ export async function getE621RandomImage(
     const {
       data: { posts },
     } = await axios.get<Data>(url, {
+      timeout: 1000,
       headers: { 'User-Agent': userAgent },
       proxy,
     });
