@@ -2,6 +2,8 @@ import { conversations, createConversation } from '@grammyjs/conversations';
 import { FileAdapter } from '@grammyjs/storage-file';
 import { env } from 'bun';
 import { Bot, session } from 'grammy';
+import { NekosRating } from '../image_api/anime/nekos/types';
+import { E621Rating } from '../image_api/furry/e621/types';
 import { onMessageText } from './bot_commands/message';
 import { setSettings } from './bot_commands/settings';
 import { startCommand } from './bot_commands/start';
@@ -12,7 +14,13 @@ import type { MyContext, SessionData } from './types';
 const bot = new Bot<MyContext>(env.TOKEN!);
 
 function initial(): SessionData {
-  return { rating: 'safe', tags: 'fox' };
+  return {
+    rating: {
+      nekos: NekosRating.Safe,
+      e621: E621Rating.Safe,
+    },
+    tags: 'fox',
+  };
 }
 
 bot.use(

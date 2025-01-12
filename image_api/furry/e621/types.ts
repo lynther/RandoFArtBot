@@ -1,3 +1,9 @@
+export enum E621Rating {
+  Safe = 's',
+  Questionable = 'q',
+  Explicit = 'e',
+}
+
 export interface Query {
   tags: string;
 }
@@ -18,7 +24,7 @@ export interface Post {
   locked_tags: any[];
   change_seq: number;
   flags: Flags;
-  rating: string;
+  rating: E621Rating;
   fav_count: number;
   sources: string[];
   pools: any[];

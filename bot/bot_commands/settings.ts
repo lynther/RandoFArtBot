@@ -4,9 +4,14 @@ import { logUserAction } from '../utils';
 
 export async function showSettings(ctx: MyContext) {
   const keyboard = new InlineKeyboard()
-    .text(`🔞 Рейтинг: ${ctx.session.rating}`, 'rating')
+    .text('🔞 Рейтинг')
     .row()
-    .text(`📄 Теги для e621.net: ${ctx.session.tags}`, 'tags');
+    .text(`nekosapi.com (${ctx.session.rating.nekos})`, 'rating-nekos')
+    .text(`e621.net (${ctx.session.rating.e621})`, 'rating-e621')
+    .row()
+    .text('📄 Теги')
+    .row()
+    .text(`e621.net (${ctx.session.tags})`, 'tags');
 
   await ctx.replyWithPhoto(new InputFile('bot/attachments/settings.png'), {
     reply_markup: keyboard,
@@ -19,7 +24,8 @@ export async function setSettings(ctx: MyContext) {
   const data = ctx.callbackQuery?.data;
 
   switch (data) {
-    case 'rating': {
+    case 'rating-nekos':
+    case 'rating-e621': {
       await ctx.conversation.enter('setRating');
       await ctx.answerCallbackQuery('Выбор рейтинга');
 
@@ -30,6 +36,10 @@ export async function setSettings(ctx: MyContext) {
       await ctx.conversation.enter('setTags');
       await ctx.answerCallbackQuery('Установка тегов');
       logUserAction(ctx, '⚙️ Настройки -> Теги');
+      break;
+    }
+    default: {
+      await ctx.answerCallbackQuery('Не используемая кнопка');
       break;
     }
   }

@@ -1,5 +1,6 @@
 import { env } from 'bun';
 import { getNekosRandomImage } from '../../image_api/anime/nekos/mod';
+import type { NekosRating } from '../../image_api/anime/nekos/types';
 import { getE621RandomImage } from '../../image_api/furry/e621/mod';
 import type { MyContext } from '../types';
 import { logUserAction, mdEscape } from '../utils';
@@ -10,7 +11,8 @@ const errorMsg = [
 ].join('\n');
 
 export async function imageCommandAnime(ctx: MyContext) {
-  const image = await getNekosRandomImage(ctx.session.rating);
+  const rating = ctx.session.rating.nekos as NekosRating;
+  const image = await getNekosRandomImage(rating);
 
   logUserAction(ctx, '⛩️ Получить изображение [Anime]');
 
@@ -18,7 +20,7 @@ export async function imageCommandAnime(ctx: MyContext) {
     const description = [
       `*Автор*: ${image.artist_name ?? 'не указан'}`,
       `*Теги*: ${mdEscape(image.tags.join(', '))}`,
-      `*Рейтинг*: \`${ctx.session.rating}\``,
+      `*Рейтинг*: \`${rating}\``,
     ];
 
     await ctx.replyWithChatAction('upload_photo');
@@ -34,7 +36,7 @@ export async function imageCommandAnime(ctx: MyContext) {
 
 export async function imageCommandFurry(ctx: MyContext) {
   const post = await getE621RandomImage(
-    `${ctx.session.tags} rating:e -type:gif -type:swf -type:webm`,
+    `${ctx.session.tags} rating:${ctx.session.rating.e621} -type:gif -type:swf -type:webm`,
     env.PROXY!
   );
 
