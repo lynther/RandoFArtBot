@@ -22,7 +22,9 @@ bot.use(
 );
 bot.use(conversations());
 bot.use(createConversation(setRating));
+
 bot.command('start', startCommand);
+
 bot.on('message:text', onMessageText);
 bot.on('callback_query:data', setSettings);
 bot.catch(async err => {
