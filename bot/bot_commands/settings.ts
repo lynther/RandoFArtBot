@@ -6,7 +6,7 @@ export async function showSettings(ctx: MyContext) {
   const keyboard = new InlineKeyboard()
     .text(`🔞 Рейтинг: ${ctx.session.rating}`, 'rating')
     .row()
-    .text(`📄 Теги: ${ctx.session.tags}`, 'tags');
+    .text(`📄 Теги для e621.net: ${ctx.session.tags}`, 'tags');
 
   await ctx.replyWithPhoto(new InputFile('bot/attachments/settings.png'), {
     reply_markup: keyboard,
@@ -27,7 +27,8 @@ export async function setSettings(ctx: MyContext) {
       break;
     }
     case 'tags': {
-      await ctx.answerCallbackQuery('🔨 В разработке');
+      await ctx.conversation.enter('setTags');
+      await ctx.answerCallbackQuery('Установка тегов');
       logUserAction(ctx, '⚙️ Настройки -> Теги');
       break;
     }

@@ -5,10 +5,7 @@ import type { MyContext } from '../types';
 import { logUserAction, mdEscape } from '../utils';
 
 export async function imageCommandAnime(ctx: MyContext) {
-  const image = await getNekosRandomImage({
-    rating: ctx.session.rating,
-    tags: ctx.session.tags,
-  });
+  const image = await getNekosRandomImage(ctx.session.rating);
 
   logUserAction(ctx, '⛩️ Получить изображение [Anime]');
 
@@ -32,9 +29,9 @@ export async function imageCommandAnime(ctx: MyContext) {
 
 export async function imageCommandFurry(ctx: MyContext) {
   const post = await getE621RandomImage(
-    'feral rating:e -type:gif -type:swf -type:webm',
+    `${ctx.session.tags} rating:e -type:gif -type:swf -type:webm`,
     env.PROXY!
-  ); // временное решение
+  );
 
   logUserAction(ctx, '🦊 Получить изображение [Furry]');
 

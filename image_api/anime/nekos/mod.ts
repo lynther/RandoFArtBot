@@ -1,13 +1,13 @@
 import axios from 'axios';
-import type { ImageData, Query } from './types';
+import type { ImageData, Rating } from './types';
 
 const API_BASE = 'https://api.nekosapi.com/v4/';
 
 export async function getNekosRandomImage(
-  query: Query
+  rating: Rating
 ): Promise<ImageData | null> {
   const url = new URL('images/random', API_BASE);
-  const params = new URLSearchParams({ limit: '1', ...query });
+  const params = new URLSearchParams({ limit: '1', rating });
   url.search = params.toString();
 
   try {

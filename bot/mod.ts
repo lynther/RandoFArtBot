@@ -6,12 +6,13 @@ import { onMessageText } from './bot_commands/message';
 import { setSettings } from './bot_commands/settings';
 import { startCommand } from './bot_commands/start';
 import { setRating } from './conversation/set_rating';
+import { setTags } from './conversation/set_tags';
 import type { MyContext, SessionData } from './types';
 
 const bot = new Bot<MyContext>(env.TOKEN!);
 
 function initial(): SessionData {
-  return { rating: 'safe', tags: 'girl' };
+  return { rating: 'safe', tags: 'fox' };
 }
 
 bot.use(
@@ -22,6 +23,7 @@ bot.use(
 );
 bot.use(conversations());
 bot.use(createConversation(setRating));
+bot.use(createConversation(setTags));
 
 bot.command('start', startCommand);
 
