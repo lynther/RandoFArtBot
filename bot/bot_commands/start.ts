@@ -2,7 +2,7 @@ import { Keyboard, type CommandContext } from 'grammy';
 import type { MyContext } from '../types';
 import { logUserAction } from '../utils';
 
-const keyboard = new Keyboard()
+export const keyboard = new Keyboard()
   .text('⛩️ Получить изображение [Anime]')
   .row()
   .text('🦊 Получить изображение [Furry]')
