@@ -29,7 +29,7 @@ export async function getE621RandomImage(
       headers: { 'User-Agent': userAgent },
       proxy,
     });
-    return posts[0];
+    return posts[0] ?? null;
   } catch (error) {
     if (isAxiosError(error)) {
       console.error(`${url} - ${error.message}`);

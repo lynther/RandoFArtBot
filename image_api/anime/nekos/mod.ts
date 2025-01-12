@@ -18,7 +18,7 @@ export async function getNekosRandomImage(
       return null;
     }
 
-    return response.data[0];
+    return response.data[0] ?? null;
   } catch (error) {
     console.error(error);
     return null;
