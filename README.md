@@ -31,3 +31,4 @@ This project was created using `bun init` in bun v1.1.42. [Bun](https://bun.sh) 
 
 # TODO
 1. ~~Заменить копирование и вставку рейтинга, на InlineKeyboard~~
+2. Обновлять сообщение с настройками после их изменения
