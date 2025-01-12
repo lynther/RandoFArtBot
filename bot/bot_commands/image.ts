@@ -9,7 +9,6 @@ export async function imageCommandAnime(ctx: MyContext) {
     rating: ctx.session.rating,
     tags: ctx.session.tags,
   });
-  ctx.session.url = image?.url;
 
   logUserAction(ctx, '⛩️ Получить изображение [Anime]');
 
@@ -68,8 +67,6 @@ export async function imageCommandFurry(ctx: MyContext) {
     await ctx.reply(description.join('\n'), { parse_mode: 'MarkdownV2' });
     return;
   }
-
-  ctx.session.url = post.file.url;
 
   await ctx.replyWithPhoto(post.file.url, {
     caption: description.join('\n'),

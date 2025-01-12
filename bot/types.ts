@@ -5,7 +5,6 @@ import type { Rating } from '../image_api/anime/nekos/types';
 export interface SessionData {
   rating: Rating;
   tags: string;
-  url?: string;
 }
 
 export type MyContext = Context &

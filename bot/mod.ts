@@ -26,15 +26,6 @@ bot.command('start', startCommand);
 bot.on('message:text', onMessageText);
 bot.on('callback_query:data', setSettings);
 bot.catch(async err => {
-  if (err.message.includes('failed to get HTTP URL content')) {
-    const msg = [
-      'telegram не удалось скачать изображение по ссылке:',
-      err.ctx.session.url,
-    ];
-    await err.ctx.reply(msg.join('\n'));
-    return;
-  }
-
   console.error(err.message);
 });
 
