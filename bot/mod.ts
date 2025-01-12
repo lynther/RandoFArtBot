@@ -7,7 +7,6 @@ import { E621Rating } from '../image_api/furry/e621/types';
 import { onMessageText } from './bot_commands/message';
 import { setSettings } from './bot_commands/settings';
 import { startCommand } from './bot_commands/start';
-import { setRating } from './conversation/set_rating';
 import { setTags } from './conversation/set_tags';
 import type { MyContext, SessionData } from './types';
 
@@ -30,7 +29,6 @@ bot.use(
   })
 );
 bot.use(conversations());
-bot.use(createConversation(setRating));
 bot.use(createConversation(setTags));
 
 bot.command('start', startCommand);

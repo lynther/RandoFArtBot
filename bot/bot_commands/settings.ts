@@ -1,4 +1,6 @@
 import { InlineKeyboard, InputFile } from 'grammy';
+import { NekosRating } from '../../image_api/anime/nekos/types';
+import { E621Rating } from '../../image_api/furry/e621/types';
 import type { MyContext } from '../types';
 import { logUserAction } from '../utils';
 
@@ -7,7 +9,14 @@ export async function showSettings(ctx: MyContext) {
     .text('🔞 Рейтинг')
     .row()
     .text(`nekosapi.com (${ctx.session.rating.nekos})`, 'rating-nekos')
+    .row()
+    .text('🌸 Безопасный', 'rating-nekos-s')
+    .text('👨‍🦰 Для взрослых', 'rating-nekos-e')
+    .row()
     .text(`e621.net (${ctx.session.rating.e621})`, 'rating-e621')
+    .row()
+    .text('🌸 Безопасный', 'rating-e621-s')
+    .text('👨‍🦰 Для взрослых', 'rating-e621-e')
     .row()
     .text('📄 Теги')
     .row()
@@ -24,12 +33,24 @@ export async function setSettings(ctx: MyContext) {
   const data = ctx.callbackQuery?.data;
 
   switch (data) {
-    case 'rating-nekos':
-    case 'rating-e621': {
-      await ctx.conversation.enter('setRating');
-      await ctx.answerCallbackQuery('Выбор рейтинга');
-
-      logUserAction(ctx, '⚙️ Настройки -> Рейтинг');
+    case 'rating-nekos-s': {
+      ctx.session.rating.nekos = NekosRating.Safe;
+      await ctx.answerCallbackQuery('Рейтинг установлен');
+      break;
+    }
+    case 'rating-nekos-e': {
+      ctx.session.rating.nekos = NekosRating.Explicit;
+      await ctx.answerCallbackQuery('Рейтинг установлен');
+      break;
+    }
+    case 'rating-e621-s': {
+      ctx.session.rating.e621 = E621Rating.Safe;
+      await ctx.answerCallbackQuery('Рейтинг установлен');
+      break;
+    }
+    case 'rating-e621-e': {
+      ctx.session.rating.e621 = E621Rating.Explicit;
+      await ctx.answerCallbackQuery('Рейтинг установлен');
       break;
     }
     case 'tags': {
