@@ -43,7 +43,7 @@ export async function imageCommandFurry(ctx: MyContext) {
     await ctx.reply('Не удалось получить ссылку на изображение :(');
     return;
   }
-  ctx.session.url = post.file.url;
+
   let tags;
 
   if (post.tags.general.length > 30) {
@@ -64,10 +64,12 @@ export async function imageCommandFurry(ctx: MyContext) {
 
   await ctx.replyWithChatAction('upload_photo');
 
-  if (post.file.size > 5242880) {
+  if (post.file.size > 5242880 || post.file.url === null) {
     await ctx.reply(description.join('\n'), { parse_mode: 'MarkdownV2' });
     return;
   }
+
+  ctx.session.url = post.file.url;
 
   await ctx.replyWithPhoto(post.file.url, {
     caption: description.join('\n'),

@@ -38,7 +38,7 @@ export interface File {
   ext: string;
   size: number;
   md5: string;
-  url: string;
+  url: string | null;
 }
 
 export interface Flags {
@@ -53,7 +53,7 @@ export interface Flags {
 export interface Preview {
   width: number;
   height: number;
-  url: string;
+  url: string | null;
 }
 
 export interface Relationships {
@@ -67,7 +67,7 @@ export interface Sample {
   has: boolean;
   height: number;
   width: number;
-  url: string;
+  url: string | null;
   alternates: Alternates;
 }
 
@@ -88,5 +88,5 @@ export interface Tags {
   species: string[];
   invalid: any[];
   meta: string[];
-  lore: any[];
+  lore: string[];
 }
