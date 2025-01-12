@@ -1,7 +1,7 @@
 # RandoFArtBot
 Бот для получения случайного изображения с api nekosapi.com и e621.
 
-Можно менять рейтинг изображения и в будущем планируется поддержка тегов.
+Можно изменять рейтинг изображения и теги (e621).
 
 To install dependencies:
 
@@ -28,3 +28,6 @@ bun run index.ts
 ```
 
 This project was created using `bun init` in bun v1.1.42. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+
+# TODO
+1. Заменить копирование и вставку рейтинга, на InlineKeyboard
